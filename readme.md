@@ -26,10 +26,10 @@ php cli <options>
 
 Options :
 
-[-] --serve # Serving apps
-[-] --database:migrate # Migrating table
-[-] --database:drop # Drop table
-[-] --help # Show all options
+- --serve # Serving apps
+- --database:migrate # Migrating table
+- --database:drop # Drop table
+- --help # Show all options
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
