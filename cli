@@ -1,0 +1,48 @@
+<?php
+
+require_once(__DIR__ . "/vendor/autoload.php");
+require_once(__DIR__ . "/database/create.php");
+require_once(__DIR__ . "/database/drop.php");
+
+use splitbrain\phpcli\CLI;
+use splitbrain\phpcli\Options;
+use Database\Migrate\Table as Migrate;
+use Database\Drop\Table as Drop;
+
+class Minimal extends CLI
+{
+    protected function setup(Options $options)
+    {
+        $options->setHelp('CLI function to help migrate table');
+        $options->registerOption('version', 'print version', 'v');
+        $options->registerOption('database:migrate', 'migrate table database');
+        $options->registerOption('database:drop', 'drop table database');
+        $options->registerOption('serve', 'launch apps server');
+    }
+
+    // implement your code
+    protected function main(Options $options)
+    {
+        if ($options->getOpt('version')) {
+            $this->info('0.0.1-rc1');
+        } elseif ($options->getOpt('database:migrate')) {
+            $migrate = new Migrate;
+            $migrate = $migrate->create();
+            return $migrate;
+        } elseif ($options->getOpt('database:drop')) {
+            $drop = new Drop;
+            $drop = $drop->drop();
+            return $drop;
+        } elseif ($options->getOpt('serve')) {
+            $this->info('Apps has been launch using PHP 7.2.19');
+            $this->info('Open on browser or rest client localhost:3000');
+            exec("php -S localhost:3000");
+        } else {
+            echo $options->help();
+        }
+    }
+}
+
+// execute it
+$cli = new Minimal();
+$cli->run();
